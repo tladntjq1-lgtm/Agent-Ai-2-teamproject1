@@ -14,6 +14,14 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import os
+import environ
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,7 +64,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,21 +83,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 DATABASES = {
-
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "...",
-        "USER": "...",
-        "PASSWORD": "...",
-        "HOST": "...",
-        "PORT": "...",
-        "OPTIONS": {          
-                    "options":"-c search_path = practice",
-
+        "NAME": env("DB_NAME"),      
+        "USER": env("DB_USER"),      
+        "PASSWORD": env("DB_PASSWORD"), 
+        "HOST": env("DB_HOST"),       
+        "PORT": env("DB_PORT"),       
+        "OPTIONS": {
+            "options": "-c search_path=practice",
         },
-
-    }
-
+    },
 }
 
 
