@@ -1,23 +1,17 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import path
 from members import views
 
 urlpatterns = [
-    path('', views.member_list, name='member_list'),  # localhost:8000/members/
-    path('create/', views.member_create, name='member_create'),  # 🔥 localhost:8000/members/create/ 주소 추가!
+    path('', views.member_list, name='member_list'),
+    path('create/', views.member_create, name='member_create'),
+    path(
+        'update/<int:member_id>/',
+        views.member_update,
+        name='member_update'
+    ),
+    path(
+        'delete/<int:member_id>/',
+        views.member_delete,
+        name='member_delete'
+    ),
 ]
